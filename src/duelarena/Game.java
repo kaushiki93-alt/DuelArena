@@ -1,30 +1,30 @@
+
 package duelarena;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 public class Game {
 
     public static void main(String[] args) {
 
-        JFrame frame = new JFrame("Duel Arena");
+        SwingUtilities.invokeLater(() -> {
 
-        frame.setSize(800, 600);
+            JFrame frame = new JFrame("Duel Arena");
 
-        frame.setDefaultCloseOperation(
-                JFrame.EXIT_ON_CLOSE
-        );
+            frame.setDefaultCloseOperation(
+                    JFrame.EXIT_ON_CLOSE
+            );
 
-        // Allow resizing and maximizing
-        frame.setResizable(true);
+            frame.setSize(1000, 700);
+            frame.setLocationRelativeTo(null);
+            frame.setResizable(true);
 
-        GamePanel gamePanel = new GamePanel();
+            MainMenuPanel mainMenu =
+                    new MainMenuPanel(frame);
 
-        frame.add(gamePanel);
-
-        frame.setLocationRelativeTo(null);
-
-        frame.setVisible(true);
-
-        gamePanel.requestFocusInWindow();
+            frame.setContentPane(mainMenu);
+            frame.setVisible(true);
+        });
     }
 }
