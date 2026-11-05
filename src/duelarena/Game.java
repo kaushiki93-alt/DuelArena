@@ -3,6 +3,7 @@ package duelarena;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 public class Game {
 
@@ -10,21 +11,39 @@ public class Game {
 
         SwingUtilities.invokeLater(() -> {
 
-            JFrame frame = new JFrame("Duel Arena");
+            try {
+                // Use the computer's normal window appearance.
+                UIManager.setLookAndFeel(
+                        UIManager.getSystemLookAndFeelClassName()
+                );
 
-            frame.setDefaultCloseOperation(
-                    JFrame.EXIT_ON_CLOSE
-            );
+                JFrame frame = new JFrame("Duel Arena");
 
-            frame.setSize(1000, 700);
-            frame.setLocationRelativeTo(null);
-            frame.setResizable(true);
+                frame.setDefaultCloseOperation(
+                        JFrame.EXIT_ON_CLOSE
+                );
 
-            MainMenuPanel mainMenu =
-                    new MainMenuPanel(frame);
+                frame.setSize(1000, 700);
+                frame.setLocationRelativeTo(null);
+                frame.setResizable(true);
 
-            frame.setContentPane(mainMenu);
-            frame.setVisible(true);
+                MainMenuPanel mainMenu =
+                        new MainMenuPanel(frame);
+
+                frame.setContentPane(mainMenu);
+
+                frame.setVisible(true);
+
+                System.out.println(
+                        "Duel Arena window opened successfully."
+                );
+
+            } catch (Exception e) {
+                System.err.println(
+                        "Error while opening Duel Arena:"
+                );
+                e.printStackTrace();
+            }
         });
     }
 }

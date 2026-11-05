@@ -6,63 +6,195 @@ import java.io.File;
 
 public class SoundManager {
 
-    // Store two different bullet sounds
+    // Two bullet sound effects
     private static Clip[] sounds = new Clip[2];
 
-    // Load bullet sound files
+    // Separate music tracks
+    private static Clip backgroundMusic;
+    private static Clip victoryMusic;
+
+    // Sound settings
+    private static boolean backgroundMusicEnabled = true;
+    private static boolean bulletSoundsEnabled = true;
+
+    // Track which screen's music should play
+    private static boolean victoryScreenActive = false;
+
+    // Load all sounds
     public static void loadSounds() {
+        loadBulletSound(0, "resources/gunshoot.wav");
+        loadBulletSound(1, "resources/gunshoot2.wav");
 
-        String[] files = {
-                "resources/gunshoot2.wav",
-                "resources/gunshoot.wav"
-        };
+        loadMusic("resources/battle_music.wav", false);
+        loadMusic("resources/victory_music.wav", true);
+    }
 
-        for (int i = 0; i < files.length; i++) {
+    // Load a music file
+    private static void loadMusic(String filePath, boolean victory) {
+        try {
+            File file = new File(filePath);
 
-            try {
-                File soundFile = new File(files[i]);
+            if (!file.exists()) {
+                System.out.println("Music file not found: " + filePath);
+                return;
+            }
 
-                AudioInputStream audioStream =
-                        AudioSystem.getAudioInputStream(soundFile);
+            try (AudioInputStream stream =
+                         AudioSystem.getAudioInputStream(file)) {
 
                 Clip clip = AudioSystem.getClip();
-                clip.open(audioStream);
+                clip.open(stream);
 
-                sounds[i] = clip;
+                if (victory) {
+                    victoryMusic = clip;
+                } else {
+                    backgroundMusic = clip;
+                }
+            }
 
-                audioStream.close();
+        } catch (Exception e) {
+            System.out.println("Could not load music: " + filePath);
+            e.printStackTrace();
+        }
+    }
 
-                System.out.println(
-                        "Sound loaded successfully: " + files[i]
-                );
+    // Load a bullet sound
+    private static void loadBulletSound(int index, String filePath) {
+        try {
+            File file = new File(filePath);
 
-            } catch (Exception e) {
+            if (!file.exists()) {
+                System.out.println("Bullet sound not found: " + filePath);
+                return;
+            }
 
-                System.out.println(
-                        "Could not load sound: " + files[i]
-                );
+            try (AudioInputStream stream =
+                         AudioSystem.getAudioInputStream(file)) {
 
-                e.printStackTrace();
+                sounds[index] = AudioSystem.getClip();
+                sounds[index].open(stream);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Could not load bullet sound: " + filePath);
+            e.printStackTrace();
+        }
+    }
+
+    // Play battle music
+    public static void playBackgroundMusic() {
+        victoryScreenActive = false;
+        stopClip(victoryMusic);
+
+        if (!backgroundMusicEnabled || backgroundMusic == null) {
+            return;
+        }
+
+        if (!backgroundMusic.isRunning()) {
+            backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY);
+        }
+    }
+
+    // Play victory music instead of battle music
+    public static void playVictoryMusic() {
+        victoryScreenActive = true;
+        stopClip(backgroundMusic);
+        stopClip(victoryMusic);
+
+        if (!backgroundMusicEnabled || victoryMusic == null) {
+            return;
+        }
+
+        victoryMusic.setFramePosition(0);
+        victoryMusic.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+
+    // Stop a music clip safely
+    private static void stopClip(Clip clip) {
+        if (clip != null && clip.isOpen()) {
+            clip.stop();
+            clip.setFramePosition(0);
+        }
+    }
+
+    // Turn music ON or OFF
+    public static void setBackgroundMusicEnabled(boolean enabled) {
+        backgroundMusicEnabled = enabled;
+
+        if (!enabled) {
+            stopClip(backgroundMusic);
+            stopClip(victoryMusic);
+        } else {
+            if (victoryScreenActive) {
+                playVictoryMusic();
+            } else {
+                playBackgroundMusic();
             }
         }
     }
 
-    // Play the selected bullet sound
-    public static void playBulletSound(int soundChoice) {
+    // Check music setting
+    public static boolean isBackgroundMusicEnabled() {
+        return backgroundMusicEnabled;
+    }
 
-        int index = soundChoice - 1;
+    // Play bullet sound independently
+    public static void playSound(int index) {
+        if (!bulletSoundsEnabled) {
+            return;
+        }
 
-        if (index >= 0 && index < sounds.length
-                && sounds[index] != null) {
+        if (index < 0 || index >= sounds.length) {
+            return;
+        }
 
-            Clip clip = sounds[index];
+        Clip sound = sounds[index];
 
-            if (clip.isRunning()) {
-                clip.stop();
+        if (sound == null || !sound.isOpen()) {
+            return;
+        }
+
+        sound.stop();
+        sound.setFramePosition(0);
+        sound.start();
+    }
+
+    // Turn bullet sounds ON or OFF independently
+    public static void setBulletSoundsEnabled(boolean enabled) {
+        bulletSoundsEnabled = enabled;
+    }
+
+    // Check bullet sound setting
+    public static boolean areBulletSoundsEnabled() {
+        return bulletSoundsEnabled;
+    }
+
+    // Stop both music tracks when leaving the game
+    public static void stopBackgroundMusic() {
+        stopClip(backgroundMusic);
+        stopClip(victoryMusic);
+        victoryScreenActive = false;
+    }
+
+    // Stop and release audio resources
+    public static void stopAllSounds() {
+        stopBackgroundMusic();
+
+        for (Clip sound : sounds) {
+            if (sound != null) {
+                sound.stop();
+                sound.close();
             }
+        }
 
-            clip.setFramePosition(0);
-            clip.start();
+        if (backgroundMusic != null) {
+            backgroundMusic.close();
+            backgroundMusic = null;
+        }
+
+        if (victoryMusic != null) {
+            victoryMusic.close();
+            victoryMusic = null;
         }
     }
 }

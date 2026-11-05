@@ -1,11 +1,10 @@
 
-
 package duelarena;
 
 import javax.swing.ImageIcon;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.io.File;
+import java.net.URL;
 
 public class Arena {
 
@@ -14,16 +13,18 @@ public class Arena {
     private Image backgroundImage;
 
     public Arena(String name, String imageFile) {
+
         this.name = name;
-        this.imagePath = "resources/arenas/" + imageFile;
+        this.imagePath = "/arenas/" + imageFile;
 
-        File file = new File(imagePath);
+        URL imageURL = getClass().getResource(imagePath);
 
-        if (file.exists()) {
-            backgroundImage = new ImageIcon(
-                    file.getAbsolutePath()
-            ).getImage();
+        if (imageURL != null) {
+
+            backgroundImage = new ImageIcon(imageURL).getImage();
+
         } else {
+
             System.out.println(
                     "Arena image not found: " + imagePath
             );
@@ -38,16 +39,27 @@ public class Arena {
         return backgroundImage;
     }
 
-    public void draw(Graphics g, int x, int y,
-                     int width, int height) {
+    public void draw(
+            Graphics g,
+            int x,
+            int y,
+            int width,
+            int height) {
 
         if (backgroundImage != null) {
+
             g.drawImage(
                     backgroundImage,
-                    x, y, width, height,
+                    x,
+                    y,
+                    width,
+                    height,
                     null
             );
+
         } else {
+
+            g.setColor(java.awt.Color.DARK_GRAY);
             g.fillRect(x, y, width, height);
         }
     }
