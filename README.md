@@ -1,5 +1,18 @@
 # Duel Arena – A 2D Combat Game
 
+## Project Details
+
+**Project Name:** Duel Arena – A 2D Combat Game
+
+**Course:** Bachelor of Computer Applications (BCA)
+
+**Programming Language:** Java
+
+**Database:** MySQL
+
+**Development Environment:** IntelliJ IDEA
+
+
 ## About the Project
 
 Duel Arena is a 2D fighting game developed using Java. It is a two-player game in which both players compete against each other in a virtual arena.
@@ -42,29 +55,29 @@ The following technologies and tools were used to develop this project:
 
 ## How the Game Works
 
-The game starts with a main menu from where players can enter the game.
+The game begins from the main menu where players can access the game.
 
-First, both players enter their names and select their preferred characters. After that, they choose an arena for the battle.
+Initially, both players enter their names and select their respective characters. After this step, they have to select the arena for the game.
 
-Once the selections are complete, the game starts with a countdown. Both players can move around the arena and attack each other using their shooting controls.
+With the selections being done, the game begins by a countdown. Now, both players can move and shoot each other inside the arena using the shooting controls.
 
-During the match, players can also collect power-ups and use shields. Their health is displayed on the screen, which helps them keep track of the match.
+Additionally, during the game, the players can use some power ups and shields. The health of the players is shown on the screen to monitor the game.
 
-When the match ends, the game displays the winner's name on the winner screen. The match details are also saved in the database and used for the leaderboard.
+After the completion of the game, the name of the winner will be shown on the winner screen. In addition, the information about the match will be stored in the database and will be used for the leaderboard.
 
 ## Game Controls
 
-| Action | Player 1 | Player 2 |
-|---|---|---|
-| Move Up | W | Up Arrow |
-| Move Down | S | Down Arrow |
-| Move Left | A | Left Arrow |
-| Move Right | D | Right Arrow |
-| Shoot | F | L |
+| **Action** | **Player 1** | **Player 2** |
+| --- | --- | --- |
+| **Move Up** | **W** | **Up Arrow** |
+| **Move Down** | **S** | **Down Arrow** |
+| **Move Left** | **A** | **Left Arrow** |
+| **Move Right** | **D** | **Right Arrow** |
+| **Shoot** | **F** | **L** |
 
 ## Project Folder Structure
 
-The project contains Java source files and resource files required to run the game.
+The project includes all necessary Java source files and resources to run the game.
 
 ```text
 DuelArena/
@@ -94,58 +107,52 @@ DuelArena/
 └── README.md
 ```
 
-*This is a basic representation of the project structure. Some additional files may also be included.*
+*This is just the basic folder structure of the project. There might be more files inside it.*
 
 ## Database Connectivity
 
-MySQL is used in this project to store player and match-related information.
+MySQL database is being used for storing the data related to players and matches.
 
-We have used JDBC to connect our Java application with the MySQL database.
+We have used JDBC to connect our Java application with MySQL database.
 
-The database is named `duel_arena_db`.
+The database name is `duel_arena_db`.
 
-It is used to manage information such as player details, match results, winners and points. The leaderboard uses the stored information to display player performance.
+This database manages data related to players information, match information, winners and points. This information is then being used by leaderboard to display player performance.
 
 ## How to Run the Project
 
-To run this project on your computer, follow these steps:
+Following steps should be followed to run this project on your computer:
 
-1. Install Java JDK on your system.
+1. Install Java JDK on your computer.
 2. Install IntelliJ IDEA.
 3. Clone or download this repository from GitHub.
-4. Open the project in IntelliJ IDEA.
-5. Add the MySQL Connector/J library to the project.
-6. Make sure MySQL is installed and running.
-7. Create the database named `duel_arena_db`.
-8. Check the database connection details in the Java code.
-9. Make sure all required images, backgrounds and sound files are available in the resources folder.
-10. Run the `Game.java` file to start the game.
+4. Import the project in IntelliJ IDEA.
+5. Add MySQL connector/j library in the project.
+6. Make sure that MySQL is installed and running.
+7. Create a database named `duel_arena_db`.
+8. Verify the database connection details in the Java program.
+9. Ensure that all the required images, background and sound files are present in the resources folder.
+10. Run `Game.java` file to start the game.
 
 ## What We Learned
 
-During the development of Duel Arena, we got the opportunity to apply the concepts that we had studied in our programming subjects.
+While developing Duel Arena, we have got a chance to practically use those concepts which we have studied in our programming subjects.
 
-We learned how to create a graphical interface using Java Swing, handle keyboard events, manage player movement and implement different game features.
+We have learned how to create GUI using Java Swing, handling keyboard events, controlling players and implementing other game features.
 
-We also got practical experience with MySQL and JDBC by connecting the game to a database. Apart from coding, this project helped us understand how different classes and features can be connected to build one complete application.
+We have also practically used MySQL and JDBC by connecting our game with database. In addition to coding, this project has taught us how various classes and features can be integrated to create one application.
 
 ## Future Improvements
 
-There are still many things that can be improved in the game. In the future, we would like to add more characters, introduce new arenas, improve the animations and include additional gameplay features.
+There are still a lot of improvements that we can do in the game. Some of the improvements that we would like to make in the future are:
 
-We can also improve the leaderboard by adding more statistics and providing better ways to view player performance.
+1. Adding more characters to the game.
+2. Creation of new arenas.
+3. Improving the animation of the game.
+4. Improving other gameplay features.
 
-## Project Details
+We can also improve the leaderboard feature by adding more statistics and improving the display of player performance.
 
-**Project Name:** Duel Arena – A 2D Combat Game
-
-**Course:** Bachelor of Computer Applications (BCA)
-
-**Programming Language:** Java
-
-**Database:** MySQL
-
-**Development Environment:** IntelliJ IDEA
 
 ## Acknowledgement
 
